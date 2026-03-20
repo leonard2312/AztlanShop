@@ -1,0 +1,44 @@
+name: Java CI with Docker and Oracle
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      # Levantamos Oracle XE como un servicio para las pruebas
+      oracle:
+        image: gvenzl/oracle-xe:latest
+        env:
+          ORACLE_PASSWORD: ${{ secrets.ORACLE_PASSWORD }}
+        ports:
+          - 1521:1521
+        # Esperamos a que la DB esté lista antes de seguir
+        options: >-
+          --health-cmd "exit 0"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17' # Cambia a '21' si es tu versión
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+      env:
+        # Estas variables sobreescriben tu application.properties en GitHub
+        SPRING_DATASOURCE_URL: jdbc:oracle:thin:@localhost:1521/xe
+        SPRING_DATASOURCE_USERNAME: system
+        SPRING_DATASOURCE_PASSWORD: ${{ secrets.ORACLE_PASSWORD }}
