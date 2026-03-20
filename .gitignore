@@ -1,0 +1,23 @@
+# Secretos (¡VITAL!)
+.env
+*.env
+
+# Java / Spring Boot
+backend/target/
+backend/*.jar
+backend/.mvn/wrapper/
+
+# React / Node
+frontend/node_modules/
+frontend/build/
+frontend/.eslintcache
+npm-debug.log*
+
+# Base de Datos (Docker)
+# Ignora la carpeta donde Oracle guarda los datos físicos
+oracle-data/
+
+# IDEs
+.idea/
+.vscode/
+*.iml

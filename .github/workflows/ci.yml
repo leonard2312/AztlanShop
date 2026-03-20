@@ -31,12 +31,12 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '17' # Cambia a '21' si es tu versión
+        java-version: '21' # Cambia a '21' si es tu versión
         distribution: 'temurin'
         cache: maven
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file springApp/AztlanShop/pom.xml
       env:
         # Estas variables sobreescriben tu application.properties en GitHub
         SPRING_DATASOURCE_URL: jdbc:oracle:thin:@localhost:1521/xe
