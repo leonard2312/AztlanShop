@@ -10,7 +10,9 @@ services:
       - oracle_data:/opt/oracle/oradata
 
   backend:
-    build: ./backend
+    build: 
+      context: ./springApp/AztlanShop
+      dockerfile: Dockerfile
     container_name: aztlan-back
     ports:
       - "8080:8080"
@@ -22,11 +24,13 @@ services:
       - database
 
   frontend:
-    build: ./frontend
+    build: ./reactApp/AztlanShopFront
     container_name: aztlan-front
     ports:
-      - "3000:3000"
+      - "5173:5173" # Cambiamos 3000 por 5173
     environment:
-      - REACT_APP_API_URL=http://localhost:8080/graphql
+      - VITE_API_URL=http://localhost:8080/graphql
     stdin_open: true # Para que React no se cierre en Docker
     tty: true
+volumes:
+  oracle_data:
