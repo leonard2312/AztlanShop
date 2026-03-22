@@ -30,7 +30,7 @@ public class AuthGraphController {
     private final OtpVerification ov;
     private final UserRepo userRepo;
 
-    @Value("${jwt.secret}")
+    @Value("${aztlan.jwt.secret}")
     private String skkey;
     private SecretKey Sign_key;
 
