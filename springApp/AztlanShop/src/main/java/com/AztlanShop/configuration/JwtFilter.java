@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    @Value("${jwt.secret}")
+    @Value("${aztlan.jwt.secret}")
     private String jwtSecret;
 
     @Override
