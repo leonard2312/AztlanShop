@@ -1,0 +1,35 @@
+type Query {
+    getUser: UserResponse
+}
+
+type Mutation {
+    register(input: RegisterInput!): AuthResponse
+
+    login(input: LoginInput!): AuthResponse
+
+    verifyEmail(email: String!, otp: String!): AuthResponse
+}
+
+type UserResponse {
+    username: String
+    email: String
+    verified: Boolean
+    message: String
+}
+
+type AuthResponse {
+    username: String
+    email: String
+    message: String
+}
+
+input RegisterInput {
+    username: String!
+    email: String!
+    password: String!
+}
+
+input LoginInput {
+    username: String!
+    password: String!
+}
