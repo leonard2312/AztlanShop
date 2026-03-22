@@ -11,14 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      # Levantamos Oracle XE como un servicio para las pruebas
       oracle:
         image: gvenzl/oracle-xe:latest
         env:
           ORACLE_PASSWORD: ${{ secrets.ORACLE_PASSWORD }}
         ports:
           - 1521:1521
-        # Esperamos a que la DB esté lista antes de seguir
         options: >-
           --health-cmd "exit 0"
           --health-interval 10s
@@ -31,14 +29,13 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '21' # Cambia a '21' si es tu versión
+        java-version: '21'
         distribution: 'temurin'
         cache: maven
 
     - name: Build with Maven
       run: mvn -B package --file springApp/AztlanShop/pom.xml
       env:
-        # Estas variables sobreescriben tu application.properties en GitHub
         SPRING_DATASOURCE_URL: jdbc:oracle:thin:@localhost:1521/xe
         SPRING_DATASOURCE_USERNAME: system
         SPRING_DATASOURCE_PASSWORD: ${{ secrets.ORACLE_PASSWORD }}

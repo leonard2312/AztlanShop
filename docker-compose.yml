@@ -5,7 +5,7 @@ services:
     ports:
       - "1521:1521"
     environment:
-      - ORACLE_PASSWORD=${ORACLE_PASSWORD} # Lee del .env
+      - ORACLE_PASSWORD=${ORACLE_PASSWORD}
     volumes:
       - oracle_data:/opt/oracle/oradata
 
@@ -27,10 +27,10 @@ services:
     build: ./reactApp/AztlanShopFront
     container_name: aztlan-front
     ports:
-      - "5173:5173" # Cambiamos 3000 por 5173
+      - "5173:5173"
     environment:
       - VITE_API_URL=http://localhost:8080/graphql
-    stdin_open: true # Para que React no se cierre en Docker
+    stdin_open: true
     tty: true
 volumes:
   oracle_data:
