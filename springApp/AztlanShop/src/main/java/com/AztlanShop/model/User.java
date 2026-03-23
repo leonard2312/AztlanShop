@@ -21,6 +21,7 @@ public class User {
     String password;
     @Column(nullable = false , unique =  true)
     String email;
+    String role;
     @Column(nullable = false)
     boolean isVerified = false;
     @Column(name = "created_at", updatable = false, insertable = false)
@@ -29,18 +30,20 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String email, boolean isVerified) {
+    public User(String username, String password, String email, boolean isVerified,String role) {
         super();
         this.username = username;
         this.password = password;
         this.email = email;
         this.isVerified = isVerified;
+        this.role = role;
     }
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email,String role) {
         super();
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
 
@@ -82,9 +85,17 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(createdAt, email, id, isVerified, username);
+        return Objects.hash(createdAt, email, id, isVerified, username,role);
     }
 
     @Override
@@ -97,12 +108,12 @@ public class User {
             return false;
         User other = (User) obj;
         return Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email) && id == other.id
-                && isVerified == other.isVerified && Objects.equals(username, other.username);
+                && isVerified == other.isVerified && Objects.equals(username, other.username) && Objects.equals(role, other.role);
     }
 
     @Override
     public String toString() {
         return "User [id=" + id + ", username=" + username + ", email=" + email + ", isVerified=" + isVerified
-                + ", createdAt=" + createdAt + "]";
+                + ", createdAt=" + createdAt + ", role=" + role +"]";
     }
 }

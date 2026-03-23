@@ -69,4 +69,14 @@ public class RegisterService {
 
         return response;
     }
+
+    public void reSendOtp(User user,Otp uotp){
+        SecureRandom SR = new SecureRandom();
+        int otp =  SR.nextInt(100000,999999);
+        String sotp = String.valueOf(otp);
+        uotp.setOtp_code(sotp);
+        uotp.setExpirytime(new Timestamp(System.currentTimeMillis() + 5 *60*1000));
+        otp_repo.save(uotp);
+        ems.sendotp(user.getEmail(), sotp);
+    }
 }

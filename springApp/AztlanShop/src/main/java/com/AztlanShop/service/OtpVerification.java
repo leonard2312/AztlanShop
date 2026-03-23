@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class OtpVerification {
 
+    @Autowired
+    RegisterService resServ;
+
     OtpRepo otp_repo;
     RegRepo reg_repo;
 
@@ -46,14 +49,15 @@ public class OtpVerification {
         }
 
         if(otp_entity.getExpirytime().before(new Timestamp(System.currentTimeMillis()))) {
+            resServ.reSendOtp(user,otp_entity);
             response.put("success", "false");
-            response.put("message", "Otp expired try Re - Regiester");
+            response.put("message", "Otp expired sending a new one");
             return response;
         }
 
         if(!otp_entity.getOtp_code().equals(enteredotp)) {
             response.put("success", "false");
-            response.put("message", "Otp Invaild");
+            response.put("message", "Otp Invalid");
             return response;
         }
 

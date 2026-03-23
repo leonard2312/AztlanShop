@@ -21,6 +21,7 @@ type AuthResponse {
     username: String
     email: String
     message: String
+    token: String
 }
 
 input RegisterInput {

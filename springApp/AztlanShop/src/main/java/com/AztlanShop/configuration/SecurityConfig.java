@@ -51,7 +51,9 @@ public class SecurityConfig {
                                 "/api/register",
                                 "/api/login",
                                 "/api/verify-email",
-                                "/api/resend-otp"
+                                "/api/resend-otp",
+                                "/graphql",
+                                "/api/test-email/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()
