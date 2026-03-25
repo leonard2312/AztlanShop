@@ -1,55 +1,29 @@
-import CardNav from './explore/CardNav';
-
-const NAV_ITEMS = [
-  {
-    label: "About",
-    bgColor: "#0D0716",
-    textColor: "#fff",
-    links: [
-      { label: "Company", ariaLabel: "About Company" },
-      { label: "Careers", ariaLabel: "About Careers" }
-    ]
-  },
-  {
-    label: "Projects", 
-    bgColor: "#170D27",
-    textColor: "#fff",
-    links: [
-      { label: "Featured", ariaLabel: "Featured Projects" },
-      { label: "Case Studies", ariaLabel: "Project Case Studies" }
-    ]
-  },
-  {
-    label: "Contact",
-    bgColor: "#271E37", 
-    textColor: "#fff",
-    links: [
-      { label: "Email", ariaLabel: "Email us" },
-      { label: "Twitter", ariaLabel: "Twitter" },
-      { label: "LinkedIn", ariaLabel: "LinkedIn" }
-    ]
-  }
-];
-
-const THEME_CONFIG = {
-  baseColor: "#fff",
-  menuColor: "#000",
-  buttonBgColor: "#111",
-  buttonTextColor: "#fff",
-  ease: "power3.out",
-  theme: "light"
-};
-
+import PillNav from './explore/PillNav';
+import { BrowserRouter } from 'react-router-dom'
 const App = () => {
   return (
     <div className="app-container">
-      <CardNav
-        logo="/logo.png"
-        logoAlt="Aztlan Shop Logo"
-        items={NAV_ITEMS}
-        {...THEME_CONFIG}
+      <BrowserRouter>
+      <PillNav
+        logo={"/logo.png"}
+        logoAlt="Company Logo"
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'About', href: '/about' },
+          { label: 'Services', href: '/services' },
+          { label: 'Contact', href: '/contact' }
+        ]}
+        activeHref="/"
+        className="custom-nav"
+        ease="power2.easeOut"
+        baseColor="#000000"
+        pillColor="#ffffff"
+        hoveredPillTextColor="#ffffff"
+        pillTextColor="#000000"
+        theme="light"
+        initialLoadAnimation={false}
       />
-      
+      </BrowserRouter>
       <main style={{ marginTop: '100px', padding: '20px' }}>
         <h1>Bienvenido a Aztlan Shop</h1>
         <p>Explora nuestra arquitectura y proyectos.</p>
