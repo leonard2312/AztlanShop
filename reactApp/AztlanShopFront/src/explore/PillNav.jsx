@@ -253,60 +253,67 @@ const PillNav = ({
         )}
 
         <div className="pill-nav-items desktop-only" ref={navItemsRef}>
-          <ul className="pill-list" role="menubar">
-            {items.map((item, i) => (
-              <li key={item.href || `item-${i}`} role="none">
-                {isRouterLink(item.href) ? (
-                  <Link
-                    role="menuitem"
-                    to={item.href}
-                    className={`pill${activeHref === item.href ? ' is-active' : ''}`}
-                    aria-label={item.ariaLabel || item.label}
-                    onMouseEnter={() => handleEnter(i)}
-                    onMouseLeave={() => handleLeave(i)}
-                  >
-                    <span
-                      className="hover-circle"
-                      aria-hidden="true"
-                      ref={el => {
-                        circleRefs.current[i] = el;
-                      }}
-                    />
-                    <span className="label-stack">
-                      <span className="pill-label">{item.label}</span>
-                      <span className="pill-label-hover" aria-hidden="true">
-                        {item.label}
-                      </span>
-                    </span>
-                  </Link>
-                ) : (
-                  <a
-                    role="menuitem"
-                    href={item.href}
-                    className={`pill${activeHref === item.href ? ' is-active' : ''}`}
-                    aria-label={item.ariaLabel || item.label}
-                    onMouseEnter={() => handleEnter(i)}
-                    onMouseLeave={() => handleLeave(i)}
-                  >
-                    <span
-                      className="hover-circle"
-                      aria-hidden="true"
-                      ref={el => {
-                        circleRefs.current[i] = el;
-                      }}
-                    />
-                    <span className="label-stack">
-                      <span className="pill-label">{item.label}</span>
-                      <span className="pill-label-hover" aria-hidden="true">
-                        {item.label}
-                      </span>
-                    </span>
-                  </a>
-                )}
+  <ul className="pill-list" role="menubar">
+    {items.map((item, i) => (
+      /* Añadimos una clase 'has-dropdown' para controlar el hover desde CSS */
+      <li key={item.href || `item-${i}`} role="none" className={item.submenu ? 'pill-dropdown-wrapper' : ''}>
+        {isRouterLink(item.href) ? (
+          <Link
+            role="menuitem"
+            to={item.href}
+            className={`pill${activeHref === item.href ? ' is-active' : ''}`}
+            aria-label={item.ariaLabel || item.label}
+            onMouseEnter={() => handleEnter(i)}
+            onMouseLeave={() => handleLeave(i)}
+          >
+            <span
+              className="hover-circle"
+              aria-hidden="true"
+              ref={el => { circleRefs.current[i] = el; }}
+            />
+            <span className="label-stack">
+              <span className="pill-label">{item.label}</span>
+              <span className="pill-label-hover" aria-hidden="true">
+                {item.label}
+              </span>
+            </span>
+          </Link>
+        ) : (
+          <a
+            role="menuitem"
+            href={item.href}
+            className={`pill${activeHref === item.href ? ' is-active' : ''}`}
+            aria-label={item.ariaLabel || item.label}
+            onMouseEnter={() => handleEnter(i)}
+            onMouseLeave={() => handleLeave(i)}
+          >
+            <span
+              className="hover-circle"
+              aria-hidden="true"
+              ref={el => { circleRefs.current[i] = el; }}
+            />
+            <span className="label-stack">
+              <span className="pill-label">{item.label}</span>
+              <span className="pill-label-hover" aria-hidden="true">
+                {item.label}
+              </span>
+            </span>
+          </a>
+        )}
+
+        {item.submenu && (
+          <ul className="pill-dropdown-menu">
+            {item.submenu.map((subItem, subIdx) => (
+              <li key={subIdx}>
+                <a href={subItem.href}>{subItem.label}</a>
               </li>
             ))}
           </ul>
-        </div>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>
 
         <button
           className="mobile-menu-button mobile-only"

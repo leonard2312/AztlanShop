@@ -8,10 +8,16 @@ const App = () => {
         logo={"/logo.png"}
         logoAlt="Company Logo"
         items={[
-          { label: 'Home', href: '/' },
-          { label: 'About', href: '/about' },
-          { label: 'Services', href: '/services' },
-          { label: 'Contact', href: '/contact' }
+          { label: 'Inicio', href: '/' },
+  { 
+    label: 'Proyectos', 
+    href: '/proyectos', 
+    submenu: [
+      { label: 'Web Design', href: '/web' },
+      { label: 'Mobile Apps', href: '/mobile' }
+    ] 
+  },
+  { label: 'Contacto', href: '/contacto' }
         ]}
         activeHref="/"
         className="custom-nav"
