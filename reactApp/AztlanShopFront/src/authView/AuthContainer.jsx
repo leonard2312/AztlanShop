@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { Mail, Lock, User, Chrome } from 'lucide-react';
-import 'AuthContainer.css'
+import { Mail, Lock, User, Globe } from 'lucide-react';
+import './AuthContainer.css';
 
 const AuthContainer = () => {
   const [isLogin, setIsLogin] = useState(true);
 
-  // Funciones placeholder para tu lógica de GraphQL
   const handleLogin = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     console.log("Datos para Login Mutation:", data);
-    // Aquí llamarías a tu hook: const [login] = useMutation(LOGIN_MUTATION);
   };
 
   const handleRegister = (e) => {
@@ -19,7 +17,6 @@ const AuthContainer = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     console.log("Datos para Register Mutation:", data);
-    // Aquí llamarías a tu hook: const [register] = useMutation(REGISTER_MUTATION);
   };
 
   const handleGoogleAuth = () => {
@@ -29,8 +26,6 @@ const AuthContainer = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden relative min-h-[550px]">
-        
-        {/* Header con Switch de Animación */}
         <div className="flex p-2 bg-gray-50 border-b">
           <button 
             onClick={() => setIsLogin(true)}
@@ -56,7 +51,6 @@ const AuthContainer = () => {
             </p>
           </div>
 
-          {/* Formulario con Transición */}
           <div className="relative">
             <form 
               onSubmit={isLogin ? handleLogin : handleRegister}
@@ -125,7 +119,7 @@ const AuthContainer = () => {
               onClick={handleGoogleAuth}
               className="w-full flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 font-medium"
             >
-              <Chrome className="text-red-500 size-5" />
+              <Globe className="text-red-500 size-5" />
               Continuar con Google
             </button>
           </div>
