@@ -1,29 +1,131 @@
-/* Animación para la aparición de campos nuevos (como el Username) */
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+/* RESET */
+* {
+  box-sizing: border-box;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+html, body, #root {
+  height: 100%;
+  margin: 0;
 }
 
-/* Efecto de escala para los botones al hacer hover */
-.auth-button-google {
-  transition: all 0.2s ease;
+/* FONDO FULL */
+.auth-container {
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
 }
 
-.auth-button-google:active {
-  transform: scale(0.98);
+/* CARD */
+.auth-card {
+  position: relative;
+  width: 850px;
+  height: 500px;
+  background: #111827;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
 }
 
-/* Suavizado general para los inputs */
-input {
-  transition: border-color 0.2s shadow 0.2s;
+/* FORM BASE */
+.form-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FORM */
+form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+form h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+form input {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #374151;
+  background: #1f2937;
+  color: white;
+}
+
+form input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* BOTONES */
+.primary {
+  padding: 10px;
+  background: #3b82f6;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.google {
+  padding: 10px;
+  margin-top: 10px;
+  background: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.divider {
+  text-align: center;
+  margin: 10px 0;
+  color: #9ca3af;
+}
+
+/* SLIDER */
+.slider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.6s ease;
+  z-index: 2;
+}
+
+.slider-content {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.slider button {
+  margin-top: 15px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* ANIMACIÓN */
+.auth-card.login .slider {
+  transform: translateX(-100%);
+}
+
+.auth-card.register .slider {
+  transform: translateX(0%);
 }

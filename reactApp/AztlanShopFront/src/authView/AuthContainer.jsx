@@ -1,129 +1,98 @@
-import React, { useState } from 'react';
-import { Mail, Lock, User, Globe } from 'lucide-react';
-import './AuthContainer.css';
+import React, { useState } from "react";
+import "./AuthContainer.css";
+
+// Hooks base (esqueleto)
+export const useAuthGraphQL = () => {
+  const login = async () => Promise.resolve();
+  const register = async () => Promise.resolve();
+  return { login, register };
+};
+
+export const useAuthMetrics = () => {
+  const trackLogin = () => console.log("login metric");
+  const trackRegister = () => console.log("register metric");
+  return { trackLogin, trackRegister };
+};
 
 const AuthContainer = () => {
   const [isLogin, setIsLogin] = useState(true);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    console.log("Datos para Login Mutation:", data);
-  };
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    console.log("Datos para Register Mutation:", data);
-  };
-
-  const handleGoogleAuth = () => {
-    console.log("Iniciando OAuth con Google...");
-  };
+  const { login, register } = useAuthGraphQL();
+  const { trackLogin, trackRegister } = useAuthMetrics();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden relative min-h-[550px]">
-        <div className="flex p-2 bg-gray-50 border-b">
-          <button 
-            onClick={() => setIsLogin(true)}
-            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${isLogin ? 'bg-white shadow text-blue-600' : 'text-gray-500'}`}
-          >
-            Iniciar Sesión
-          </button>
-          <button 
-            onClick={() => setIsLogin(false)}
-            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${!isLogin ? 'bg-white shadow text-blue-600' : 'text-gray-500'}`}
-          >
-            Registrarse
-          </button>
+    <div className="auth-container">
+      <div className={`auth-card ${isLogin ? "login" : "register"}`}>
+
+        {/* SLIDER */}
+        <div className="slider">
+          <div className="slider-content">
+            {isLogin ? (
+              <>
+                <h2>Bienvenido</h2>
+                <p>Inicia sesión para continuar</p>
+                <button onClick={() => setIsLogin(false)}>
+                  Ir a registro
+                </button>
+              </>
+            ) : (
+              <>
+                <h2>Nuevo aquí</h2>
+                <p>Crea una cuenta</p>
+                <button onClick={() => setIsLogin(true)}>
+                  Ir a login
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
-        <div className="p-8">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-800">
-              {isLogin ? 'Bienvenido de nuevo' : 'Crea tu cuenta'}
-            </h2>
-            <p className="text-gray-500 text-sm">
-              {isLogin ? 'Ingresa tus credenciales para acceder' : 'Completa los datos para empezar'}
-            </p>
-          </div>
+        {/* LOGIN */}
+        <div className="form-container login-container">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              trackLogin();
+              login();
+            }}
+          >
+            <h2>Login</h2>
+            <input type="email" placeholder="Correo" required />
+            <input type="password" placeholder="Contraseña" required />
 
-          <div className="relative">
-            <form 
-              onSubmit={isLogin ? handleLogin : handleRegister}
-              className="space-y-4 transition-all duration-500 ease-in-out"
-            >
-              {!isLogin && (
-                <div className="animate-fadeIn">
-                  <label className="block text-sm font-medium text-gray-700">Usuario</label>
-                  <div className="relative mt-1">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
-                    <input 
-                      name="username"
-                      type="text" 
-                      required
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                      placeholder="Ej. leonard_dev"
-                    />
-                  </div>
-                </div>
-              )}
+            <button className="primary">Entrar</button>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Email</label>
-                <div className="relative mt-1">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
-                  <input 
-                    name="email"
-                    type="email" 
-                    required
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    placeholder="correo@ejemplo.com"
-                  />
-                </div>
-              </div>
+            <span className="divider">o</span>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Password</label>
-                <div className="relative mt-1">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
-                  <input 
-                    name="password"
-                    type="password" 
-                    required
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    placeholder="••••••••"
-                  />
-                </div>
-              </div>
-
-              <button 
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors shadow-lg shadow-blue-200"
-              >
-                {isLogin ? 'Entrar' : 'Registrar Cuenta'}
-              </button>
-            </form>
-
-            <div className="my-6 flex items-center justify-center space-x-2">
-              <span className="h-[1px] w-full bg-gray-200"></span>
-              <span className="text-gray-400 text-xs uppercase">O</span>
-              <span className="h-[1px] w-full bg-gray-200"></span>
-            </div>
-
-            {/* Botón de Google */}
-            <button 
-              onClick={handleGoogleAuth}
-              className="w-full flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 font-medium"
-            >
-              <Globe className="text-red-500 size-5" />
+            <button type="button" className="google">
               Continuar con Google
             </button>
-          </div>
+          </form>
         </div>
+
+        {/* REGISTER */}
+        <div className="form-container register-container">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              trackRegister();
+              register();
+            }}
+          >
+            <h2>Registro</h2>
+            <input type="text" placeholder="Nombre" required />
+            <input type="email" placeholder="Correo" required />
+            <input type="password" placeholder="Contraseña" required />
+
+            <button className="primary">Crear cuenta</button>
+
+            <span className="divider">o</span>
+
+            <button type="button" className="google">
+              Registrarse con Google
+            </button>
+          </form>
+        </div>
+
       </div>
     </div>
   );
