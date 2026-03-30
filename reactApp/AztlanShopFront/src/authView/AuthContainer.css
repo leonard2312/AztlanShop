@@ -1,25 +1,34 @@
-/* RESET */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 html, body, #root {
+  width: 100%;
   height: 100%;
-  margin: 0;
+  overflow: hidden;
+  background: 
+    url("https://img3.wallspic.com/crops/4/7/2/3/13274/13274-cabina-1920x1080.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* FONDO FULL */
+
+
 .auth-container {
-  height: 100vh;
-  width: 100vw;
-  background: linear-gradient(135deg, #0f172a, #020617);
+  position: fixed;
+  inset: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   font-family: "Segoe UI", sans-serif;
 }
 
-/* CARD */
 .auth-card {
   position: relative;
   width: 850px;
@@ -30,7 +39,6 @@ html, body, #root {
   display: flex;
 }
 
-/* FORM BASE */
 .form-container {
   width: 50%;
   height: 100%;
@@ -39,7 +47,6 @@ html, body, #root {
   align-items: center;
 }
 
-/* FORM */
 form {
   width: 80%;
   display: flex;
@@ -65,7 +72,6 @@ form input:focus {
   border-color: #3b82f6;
 }
 
-/* BOTONES */
 .primary {
   padding: 10px;
   background: #3b82f6;
@@ -76,12 +82,28 @@ form input:focus {
 }
 
 .google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
   padding: 10px;
   margin-top: 10px;
-  background: white;
+
+  background: rgb(154, 67, 67);
+  color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+
+  font-weight: 500;
+}
+
+.google img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
 }
 
 .divider {
@@ -90,7 +112,6 @@ form input:focus {
   color: #9ca3af;
 }
 
-/* SLIDER */
 .slider {
   position: absolute;
   top: 0;
@@ -121,7 +142,6 @@ form input:focus {
   border-radius: 6px;
 }
 
-/* ANIMACIÓN */
 .auth-card.login .slider {
   transform: translateX(-100%);
 }
